@@ -3,26 +3,20 @@ import { styled } from '@stitches/react';
 import Flex from './Flex.tsx';
 
 interface TextProps {
-  width?: number;
   fontSize?: number;
 }
 
-const TextBase = ({ children, width, fontSize }: PropsWithChildren<TextProps>) => {
-  const widthPx = width + 'px';
+const TextBase = ({ children, fontSize }: PropsWithChildren<TextProps>) => {
   const fontSizePx = fontSize + 'px';
 
-  return (
-    <Flex css={{ width: widthPx, fontSize: fontSizePx, fontFamily: 'HakgyoansimBunpilR' }} center>
-      {children}
-    </Flex>
-  );
+  return <span style={{ fontFamily: 'YeonSung-Regular', fontSize: fontSizePx }}>{children}</span>;
 };
 
 const Text = styled(TextBase, {
   variants: {
     center: {
       true: {
-        justifyContent: 'cente',
+        justifyContent: 'center',
       },
     },
   },

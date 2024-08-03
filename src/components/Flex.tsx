@@ -12,7 +12,7 @@ interface FlexProps {
 }
 
 const FlexBase = ({ children, ...props }: PropsWithChildren<FlexProps>) => {
-  const etst = '';
+  const test = '';
 
   return <div>{children}</div>;
 };
