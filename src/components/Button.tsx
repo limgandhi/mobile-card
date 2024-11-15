@@ -7,7 +7,7 @@ const Button = styled('button', {
   background: '#FFFFFF',
   border: '5px solid #000000',
   borderRadius: 10,
-  fontFamily: 'YeonSung-Regular',
+  fontFamily: 'Moneygraphy-Pixel',
   variants: {
     size: {
       sm: {

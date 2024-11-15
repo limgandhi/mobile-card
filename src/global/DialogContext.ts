@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 interface DialogContextProps {
-  open: () => void;
+  open: ({ dialogComponent }: { dialogComponent?: ReactNode }) => void;
   close: () => void;
 }
 
 export const DialogContext = React.createContext<DialogContextProps>({
-  open: () => {},
+  open: ({ dialogComponent }: { dialogComponent?: ReactNode }) => {},
   close: () => {},
 });
 

@@ -1,19 +1,23 @@
-import React, { useContext } from 'react';
+import React, { ReactNode, useContext } from 'react';
 import { styled } from '@stitches/react';
 import Flex from './Flex.tsx';
 import DialogContext from '../global/DialogContext.ts';
 
-const Dialog = () => {
-  const { close } = useContext(DialogContext);
-  return (
-    <Flex center css={{ position: 'fixed', alignItems: 'center', inset: 0 }}>
-      <StyledDialogBackground />
-      <StyledDialog>
-        <button onClick={() => close!()}>test</button>
-      </StyledDialog>
-    </Flex>
-  );
-};
+const Dialog = ({ dialogComponent, onClose }: { dialogComponent?: ReactNode; onClose?: () => void }) => (
+  <Flex center css={{ position: 'fixed', alignItems: 'center', inset: 0 }}>
+    <StyledDialogBackground />
+
+    <StyledDialog>
+      {dialogComponent ? (
+        dialogComponent
+      ) : (
+        <Flex css={{ width: 300, height: 500, justifyContent: 'center', alignItems: 'center' }}>
+          <button onClick={() => onClose && onClose()}>test</button>
+        </Flex>
+      )}
+    </StyledDialog>
+  </Flex>
+);
 
 const StyledDialogBackground = styled(Flex, {
   position: 'fixed',
@@ -23,8 +27,8 @@ const StyledDialogBackground = styled(Flex, {
 });
 const StyledDialog = styled(Flex, {
   position: 'relative',
-  width: '300px',
-  height: '500px',
+  width: 'fit-content',
+  height: 'fit-content',
   justifyContent: 'center',
   alignItems: 'center',
   backgroundColor: '#FFFFFF',

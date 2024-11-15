@@ -2,39 +2,30 @@ import React, { useCallback, useMemo, useState } from 'react';
 import { styled } from '@stitches/react';
 import Button from '../../components/Button.tsx';
 import Flex from '../../components/Flex.tsx';
-import { User } from '../../types/User.types.ts';
+import { useUserStorage } from '../../hooks/useUserStorage.tsx';
+import { Vote } from '../../types/Vote.types.ts';
 import { isSameUser } from '../../utils/User.util.ts';
 
-interface VoteType {
-  title: string;
-  startDateOfWeek: string;
-  choices: ChoiceType[];
-}
-
-interface ChoiceType {
-  title: string;
-  voteUsers: User[];
-}
-
 interface VoteBoardProps {
-  vote: VoteType;
+  vote: Vote;
   handleVoteChange: (targetNumber: number) => void;
+  updateVoteData: (checkedIndcies: number[]) => void;
 }
 
-const VoteBoard = ({ vote, handleVoteChange }: VoteBoardProps) => {
-  const currentUser = { name: 'user01', last4PhoneNumber: '1111' } as User;
+const VoteBoard = ({ vote, handleVoteChange, updateVoteData }: VoteBoardProps) => {
+  const [currentUser] = useUserStorage((state) => [state.currentUser]);
   const [editModeYn, setEditModeYn] = useState<boolean>(false);
 
-  const getThreeChoices = useCallback(
+  const getThreeOptions = useCallback(
     (position: 'upper' | 'middle' | 'lower') =>
-      vote.choices.filter((choice, index) => {
+      vote.options.filter((option) => {
         switch (position) {
           case 'upper':
-            return index < 3;
+            return option.index < 3;
           case 'middle':
-            return index >= 3 && index < 6;
+            return option.index >= 3 && option.index < 6;
           case 'lower':
-            return index >= 6 && index < 9;
+            return option.index >= 6 && option.index < 9;
           default:
             return false;
         }
@@ -44,8 +35,10 @@ const VoteBoard = ({ vote, handleVoteChange }: VoteBoardProps) => {
 
   const checkedIndices = useMemo(
     () =>
-      vote.choices
-        .map((choice, index) => (choice.voteUsers.some((user) => isSameUser(user, currentUser)) ? index : -1))
+      vote.options
+        .map((option, index) =>
+          option.votedUsers.some((user) => !!currentUser && isSameUser(user, currentUser)) ? index : -1,
+        )
         .filter((value) => value >= 0),
     [vote],
   );
@@ -56,56 +49,58 @@ const VoteBoard = ({ vote, handleVoteChange }: VoteBoardProps) => {
 
   const handleConfirmButtonClick = () => {
     setEditModeYn((prevState) => (prevState ? !prevState : prevState));
+
+    updateVoteData(checkedIndices);
   };
 
   const handleChoiceButtonClick = (targetIndex: number) => handleVoteChange(targetIndex);
 
   return (
-    <Flex column css={{ gap: '20px' }}>
-      <Flex between>
-        {getThreeChoices('upper').map((choice, index) => (
+    <Flex fullWidth column css={{ gap: '20px' }}>
+      <Flex fullWidth center css={{ gap: '20px' }}>
+        {getThreeOptions('upper').map((option, index) => (
           <ChoiceButtonWrapper center key={'upperChoice' + index}>
             <ChoiceButton
               center
-              size65={choice.voteUsers.length >= 6 && choice.voteUsers.length < 12}
-              size80={choice.voteUsers.length >= 12}
+              size65={option.votedUsers.length >= 6 && option.votedUsers.length < 12}
+              size80={option.votedUsers.length >= 12}
               onClick={() => handleChoiceButtonClick(index)}
               disabled={!editModeYn}
               checked={checkedIndices.includes(index)}
             >
-              {choice.title}
+              {option.displayName}
             </ChoiceButton>
           </ChoiceButtonWrapper>
         ))}
       </Flex>
-      <Flex between>
-        {getThreeChoices('middle').map((choice, index) => (
+      <Flex fullWidth center css={{ gap: '20px' }}>
+        {getThreeOptions('middle').map((option, index) => (
           <ChoiceButtonWrapper center key={'middleChoice' + index}>
             <ChoiceButton
               center
-              size65={choice.voteUsers.length >= 6 && choice.voteUsers.length < 12}
-              size80={choice.voteUsers.length >= 12}
+              size65={option.votedUsers.length >= 6 && option.votedUsers.length < 12}
+              size80={option.votedUsers.length >= 12}
               onClick={() => handleChoiceButtonClick(index + 3)}
               disabled={!editModeYn}
               checked={checkedIndices.includes(index + 3)}
             >
-              {choice.title}
+              {option.displayName}
             </ChoiceButton>
           </ChoiceButtonWrapper>
         ))}
       </Flex>
-      <Flex between>
-        {getThreeChoices('lower').map((choice, index) => (
+      <Flex fullWidth center css={{ gap: '20px' }}>
+        {getThreeOptions('lower').map((option, index) => (
           <ChoiceButtonWrapper center key={'lowerChoice' + index}>
             <ChoiceButton
               center
-              size65={choice.voteUsers.length >= 6 && choice.voteUsers.length < 12}
-              size80={choice.voteUsers.length >= 12}
+              size65={option.votedUsers.length >= 6 && option.votedUsers.length < 12}
+              size80={option.votedUsers.length >= 12}
               onClick={() => handleChoiceButtonClick(index + 6)}
               disabled={!editModeYn}
               checked={checkedIndices.includes(index + 6)}
             >
-              {choice.title}
+              {option.displayName}
             </ChoiceButton>
           </ChoiceButtonWrapper>
         ))}
@@ -133,9 +128,9 @@ const ChoiceButton = styled(Flex, {
   background: '#D9D9D9',
   boxShadow: '0px 4px 4px 0px #00000040 , inset 0px -4px 4px 0px #00000040',
   transitionProperty: 'width height',
-  transitionDuration: '0.2s',
+  transitionDuration: '0.1s',
   transitionTimingFunction: 'ease-in-out',
-  fontFamily: 'YeonSung-Regular',
+  fontFamily: 'Moneygraphy-Pixel',
   variants: {
     checked: {
       true: {

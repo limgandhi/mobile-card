@@ -5,7 +5,7 @@ const useDialog = () => {
   const { open, close } = useContext(DialogContext);
 
   const openDialog = () => {
-    open();
+    open({});
   };
 
   const closeDialog = () => {

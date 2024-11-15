@@ -8,7 +8,7 @@ interface InputProps {
   onChange?: (value: string) => void;
 }
 
-const InputBase = forwardRef<HTMLInputElement, InputProps>(({ type, value, onChange, ...props }: InputProps) => {
+const InputBase = forwardRef<HTMLInputElement, InputProps>(({ type, value, onChange, ...props }: InputProps, ref) => {
   const [controlledValue, setControlledValue] = useState(value ?? '');
   const [focusedYn, setFocusedYn] = useState(false);
   const [showPasswordYn, setShowPasswordYn] = useState<boolean>(false);
@@ -55,7 +55,7 @@ const StyledInput = styled('input', {
   width: '100%',
   border: 'none',
   outline: 'none',
-  fontFamily: 'YeonSung-Regular',
+  fontFamily: 'Moneygraphy-Pixel',
   fontSize: '30px',
 });
 

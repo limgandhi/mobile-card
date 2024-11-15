@@ -27,14 +27,13 @@ const LoginPage = () => {
   };
 
   const handleLoginButtonClick = async (name: string, password: string) => {
-    const result = await retrieveUsers(name, password);
+    const retrievedUser = await retrieveUsers(name, password);
 
-    if (result?.empty) {
+    if (!retrievedUser) {
       failedLoggingIn();
       return;
     }
 
-    const retrievedUser = result?.docs.at(0)?.data() as User;
     const retrievedName = retrievedUser?.name ?? '';
     const retrievedLast4PhoneNumber = retrievedUser?.last4PhoneNumber ?? '';
 

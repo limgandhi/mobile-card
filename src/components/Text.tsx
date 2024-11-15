@@ -9,7 +9,7 @@ interface TextProps {
 const TextBase = ({ children, fontSize }: PropsWithChildren<TextProps>) => {
   const fontSizePx = fontSize + 'px';
 
-  return <span style={{ fontFamily: 'YeonSung-Regular', fontSize: fontSizePx }}>{children}</span>;
+  return <span style={{ fontFamily: 'Moneygraphy-Pixel', fontSize: fontSizePx }}>{children}</span>;
 };
 
 const Text = styled(TextBase, {
