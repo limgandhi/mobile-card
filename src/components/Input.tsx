@@ -1,4 +1,4 @@
-import React, { EventHandler, forwardRef, HTMLInputTypeAttribute, ReactEventHandler, useState } from 'react';
+import React, { forwardRef, HTMLInputTypeAttribute, useRef, useState } from 'react';
 import { styled } from '@stitches/react';
 import Flex from './Flex.tsx';
 
@@ -9,6 +9,7 @@ interface InputProps {
 }
 
 const InputBase = forwardRef<HTMLInputElement, InputProps>(({ type, value, onChange, ...props }: InputProps, ref) => {
+  const inputRef = useRef<HTMLInputElement>(null);
   const [controlledValue, setControlledValue] = useState(value ?? '');
   const [focusedYn, setFocusedYn] = useState(false);
   const [showPasswordYn, setShowPasswordYn] = useState<boolean>(false);
@@ -26,10 +27,11 @@ const InputBase = forwardRef<HTMLInputElement, InputProps>(({ type, value, onCha
   };
 
   return (
-    <Flex column css={{ alignItems: 'center', gap: '5px' }}>
+    <Flex column css={{ alignItems: 'center' }}>
       <Flex css={{ padding: '0px 5px', alignItems: 'center' }} between>
         <Flex fitToParent>
           <StyledInput
+            ref={inputRef}
             type={showPasswordYn ? undefined : type}
             value={controlledValue}
             onChange={(e) => onChangeHandle(e.target.value as string)}
@@ -63,10 +65,9 @@ const BorderBottom = styled(Flex, {
   transitionProperty: 'width',
   transitionDuration: '0.1s',
   transitionTimingFunction: 'ease-in-out',
-  height: '3px',
   borderRadius: '5px',
   width: '0%',
-  backgroundColor: '#000000',
+  borderBottom: '3px solid #000000',
   variants: {
     focus: {
       true: {
