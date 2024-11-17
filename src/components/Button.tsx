@@ -4,6 +4,7 @@ const Button = styled('button', {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
+  color: '#000000',
   background: '#FFFFFF',
   border: '5px solid #000000',
   borderRadius: 10,

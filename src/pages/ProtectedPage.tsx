@@ -10,8 +10,6 @@ const ProtectedPage = ({ children }: PropsWithChildren) => {
   useEffect(() => {
     if (!currentUser) {
       navigate('/');
-    } else {
-      navigate('list');
     }
   }, []);
 

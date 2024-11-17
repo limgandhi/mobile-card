@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { styled } from '@stitches/react';
 import Button from '../components/Button.tsx';
@@ -15,7 +15,16 @@ const HomePage = () => {
   const { open, close } = useContext(DialogContext);
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
-  const [setCurrentUser, initCurrentUser] = useUserStorage((state) => [state.setCurrentUser, state.initCurrentUser]);
+  const [currentUser, setCurrentUser, initCurrentUser] = useUserStorage((state) => [
+    state.currentUser,
+    state.setCurrentUser,
+    state.initCurrentUser,
+  ]);
+  useEffect(() => {
+    if (currentUser) {
+      navigate('/regular-vote/list', { replace: true });
+    }
+  }, [currentUser]);
   const { retrieveUsers } = useFirestore();
 
   const handleAdminButtonClick = () => {
@@ -54,7 +63,7 @@ const HomePage = () => {
     }
 
     setCurrentUser({ name: name, last4PhoneNumber: password } as User);
-    navigate('/regular-vote/board');
+    navigate('/regular-vote/list', { replace: true });
   };
 
   const failedLoggingIn = () => {

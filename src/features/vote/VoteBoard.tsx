@@ -1,7 +1,9 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useContext, useMemo, useState } from 'react';
 import { styled } from '@stitches/react';
 import Button from '../../components/Button.tsx';
 import Flex from '../../components/Flex.tsx';
+import Text from '../../components/Text.tsx';
+import DialogContext from '../../global/DialogContext.ts';
 import { useUserStorage } from '../../hooks/useUserStorage.tsx';
 import { Vote } from '../../types/Vote.types.ts';
 import { isSameUser } from '../../utils/User.util.ts';
@@ -13,25 +15,9 @@ interface VoteBoardProps {
 }
 
 const VoteBoard = ({ vote, handleVoteChange, updateVoteData }: VoteBoardProps) => {
+  const { open, close } = useContext(DialogContext);
   const [currentUser] = useUserStorage((state) => [state.currentUser]);
   const [editModeYn, setEditModeYn] = useState<boolean>(false);
-
-  const getThreeOptions = useCallback(
-    (position: 'upper' | 'middle' | 'lower') =>
-      vote.options.filter((option) => {
-        switch (position) {
-          case 'upper':
-            return option.index < 3;
-          case 'middle':
-            return option.index >= 3 && option.index < 6;
-          case 'lower':
-            return option.index >= 6 && option.index < 9;
-          default:
-            return false;
-        }
-      }),
-    [vote],
-  );
 
   const checkedIndices = useMemo(
     () =>
@@ -53,58 +39,73 @@ const VoteBoard = ({ vote, handleVoteChange, updateVoteData }: VoteBoardProps) =
     updateVoteData(checkedIndices);
   };
 
-  const handleChoiceButtonClick = (targetIndex: number) => handleVoteChange(targetIndex);
+  const handleChoiceButtonClick = (targetIndex: number) => {
+    if (editModeYn) {
+      handleVoteChange(targetIndex);
+    } else {
+      open({
+        dialogComponent: (
+          <Flex
+            css={{
+              width: 300,
+              height: 500,
+              backgroundColor: '#FFFFFF',
+              position: 'relative',
+              padding: '20px',
+              borderRadius: 5,
+            }}
+            column
+          >
+            <Flex fullWidth center css={{ height: '100px' }}>
+              <Text fontSize={30}>Users</Text>
+            </Flex>
+            <Flex fullWidth fitToParent column start>
+              {vote.options
+                .filter((option) => option.index === targetIndex)
+                .flatMap((option) => option.votedUsers)
+                .map((user, index) => (
+                  <Flex fullWidth center key={'user' + index}>
+                    <Text>{user.name}</Text>
+                  </Flex>
+                ))}
+            </Flex>
+            <Flex fullWidth center>
+              <Button size="lg" onClick={() => close()}>
+                OK
+              </Button>
+            </Flex>
+          </Flex>
+        ),
+      });
+    }
+  };
 
   return (
     <Flex fullWidth column css={{ gap: '20px' }}>
-      <Flex fullWidth center css={{ gap: '20px' }}>
-        {getThreeOptions('upper').map((option, index) => (
-          <ChoiceButtonWrapper center key={'upperChoice' + index}>
-            <ChoiceButton
-              center
-              size65={option.votedUsers.length >= 6 && option.votedUsers.length < 12}
-              size80={option.votedUsers.length >= 12}
-              onClick={() => handleChoiceButtonClick(index)}
-              disabled={!editModeYn}
-              checked={checkedIndices.includes(index)}
-            >
-              {option.displayName}
-            </ChoiceButton>
-          </ChoiceButtonWrapper>
-        ))}
-      </Flex>
-      <Flex fullWidth center css={{ gap: '20px' }}>
-        {getThreeOptions('middle').map((option, index) => (
-          <ChoiceButtonWrapper center key={'middleChoice' + index}>
-            <ChoiceButton
-              center
-              size65={option.votedUsers.length >= 6 && option.votedUsers.length < 12}
-              size80={option.votedUsers.length >= 12}
-              onClick={() => handleChoiceButtonClick(index + 3)}
-              disabled={!editModeYn}
-              checked={checkedIndices.includes(index + 3)}
-            >
-              {option.displayName}
-            </ChoiceButton>
-          </ChoiceButtonWrapper>
-        ))}
-      </Flex>
-      <Flex fullWidth center css={{ gap: '20px' }}>
-        {getThreeOptions('lower').map((option, index) => (
-          <ChoiceButtonWrapper center key={'lowerChoice' + index}>
-            <ChoiceButton
-              center
-              size65={option.votedUsers.length >= 6 && option.votedUsers.length < 12}
-              size80={option.votedUsers.length >= 12}
-              onClick={() => handleChoiceButtonClick(index + 6)}
-              disabled={!editModeYn}
-              checked={checkedIndices.includes(index + 6)}
-            >
-              {option.displayName}
-            </ChoiceButton>
-          </ChoiceButtonWrapper>
-        ))}
-      </Flex>
+      {Array.from(vote.options, (option) => option.index).map(
+        (optionIndex) =>
+          optionIndex % 3 === 0 && (
+            <Flex key={`row${optionIndex / 3}`} center>
+              <Flex css={{ gap: '20px', width: '340px' }}>
+                {vote.options
+                  .filter((option) => optionIndex <= option.index && option.index < optionIndex + 3)
+                  .map((option) => (
+                    <ChoiceButtonWrapper center key={'upperChoice' + option.index}>
+                      <ChoiceButton
+                        center
+                        size65={option.votedUsers.length >= 6 && option.votedUsers.length < 12}
+                        size80={option.votedUsers.length >= 12}
+                        onClick={() => handleChoiceButtonClick(option.index)}
+                        checked={checkedIndices.includes(option.index)}
+                      >
+                        {option.displayName}
+                      </ChoiceButton>
+                    </ChoiceButtonWrapper>
+                  ))}
+              </Flex>
+            </Flex>
+          ),
+      )}
       <Flex center>
         {editModeYn ? (
           <Button size={'lg'} onClick={() => handleConfirmButtonClick()}>

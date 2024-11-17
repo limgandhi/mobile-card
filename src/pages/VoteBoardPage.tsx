@@ -43,8 +43,8 @@ const VoteBoardPage = () => {
 
   const handleVoteChange = (targetIndex: number) => {
     setVote((prevState) => {
-      const changedOptions = prevState.options.map((option, index) => {
-        if (index === targetIndex && currentUser) {
+      const changedOptions = prevState.options.map((option) => {
+        if (option.index === targetIndex && currentUser) {
           return option.votedUsers.some((user) => isSameUser(user, currentUser))
             ? {
                 ...option,
