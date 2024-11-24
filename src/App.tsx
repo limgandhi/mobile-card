@@ -18,6 +18,7 @@ const defaultGlobalStyle = globalCss({
     height: '100svh',
     justifyContent: 'center',
     background: 'black',
+    WebkitTapHighlightColor: 'transparent !important',
   },
   '@font-face': [
     {
