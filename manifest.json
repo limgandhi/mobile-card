@@ -1,0 +1,17 @@
+{
+  "name": "My PWA",
+  "short_name": "나의 블로그",
+  "start_url": "/index.html",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#fff",
+  "theme_color": "#f351b5",
+  "description": "Keep running until you're super sweaty",
+  "dir": "ltr",
+  "orientation": "portrait-primary",
+  "icons": [{
+    "src": "/src/assets/react.svg",
+    "type": "image/svg+xml",
+    "sizes": "512x512"
+  }]
+}
