@@ -12,6 +12,6 @@
   "icons": [{
     "src": "/src/assets/tmp_logo.png",
     "type": "image/png",
-    "sizes": "512x512"
+    "sizes": "1024x1024"
   }]
 }
