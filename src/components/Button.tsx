@@ -4,9 +4,10 @@ const Button = styled('button', {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  color: '#000000',
-  background: '#FFFFFF',
-  border: '5px solid #000000',
+  color: '#FEEED7',
+  background: '#3A3754',
+  // border: '5px solid #000000',
+  border: '0px',
   borderRadius: 10,
   fontFamily: 'Moneygraphy-Pixel',
   variants: {

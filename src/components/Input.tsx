@@ -1,6 +1,7 @@
 import React, { forwardRef, HTMLInputTypeAttribute, useRef, useState } from 'react';
 import { styled } from '@stitches/react';
 import Flex from './Flex.tsx';
+import Text from './Text.tsx';
 
 interface InputProps {
   type?: HTMLInputTypeAttribute;
@@ -29,7 +30,14 @@ const InputBase = forwardRef<HTMLInputElement, InputProps>(({ type, value, onCha
   return (
     <Flex column css={{ alignItems: 'center' }}>
       <Flex css={{ padding: '0px 5px', alignItems: 'center' }} between>
-        <Flex fitToParent>
+        <Flex fitToParent css={{ position: 'relative' }}>
+          {!(focusedYn || controlledValue !== '') && (
+            <Flex fullWidth css={{ position: 'absolute', pointerEvents: 'none' }}>
+              <Text fontSize={30} fontColor={'#B0B0B0'}>
+                {type === 'password' ? '비밀번호' : '김덕배'}
+              </Text>
+            </Flex>
+          )}
           <StyledInput
             ref={inputRef}
             type={showPasswordYn ? undefined : type}
@@ -46,7 +54,10 @@ const InputBase = forwardRef<HTMLInputElement, InputProps>(({ type, value, onCha
           />
         )}
       </Flex>
-      <BorderBottom focus={focusedYn || controlledValue !== ''} />
+      <Flex fullWidth css={{ position: 'relative' }}>
+        <BorderBottom fullWidth css={{ borderBottom: '3px solid #B0B0B0' }} />
+        <BorderBottom css={{ position: 'absolute' }} focus={focusedYn || controlledValue !== ''} />
+      </Flex>
     </Flex>
   );
 });
@@ -59,6 +70,7 @@ const StyledInput = styled('input', {
   outline: 'none',
   fontFamily: 'Moneygraphy-Pixel',
   fontSize: '30px',
+  backgroundColor: '#FEEED7',
 });
 
 const BorderBottom = styled(Flex, {

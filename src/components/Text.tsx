@@ -4,12 +4,13 @@ import Flex from './Flex.tsx';
 
 interface TextProps {
   fontSize?: number;
+  fontColor?: string;
 }
 
-const TextBase = ({ children, fontSize }: PropsWithChildren<TextProps>) => {
+const TextBase = ({ children, fontSize, fontColor }: PropsWithChildren<TextProps>) => {
   const fontSizePx = fontSize + 'px';
 
-  return <span style={{ fontFamily: 'Moneygraphy-Pixel', fontSize: fontSizePx }}>{children}</span>;
+  return <span style={{ fontFamily: 'Moneygraphy-Pixel', fontSize: fontSizePx, color: fontColor }}>{children}</span>;
 };
 
 const Text = styled(TextBase, {

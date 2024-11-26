@@ -59,8 +59,9 @@ function App() {
 const MobilePage = styled('div', {
   display: 'flex',
   width: '430px',
+  padding: '0px 10px',
   justifyContent: 'center',
-  background: '#FFFFFF',
+  background: '#FEEED7',
 });
 
 export default App;

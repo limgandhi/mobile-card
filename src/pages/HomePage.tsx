@@ -103,8 +103,8 @@ const HomePage = () => {
             <Input type={'password'} value={password} onChange={(e) => handlePasswordChange(e)} />
           </Flex>
         </Flex>
-        <Flex fullWidth center>
-          <Button size={'lg'} onClick={() => handleLoginButtonClick(name, password)}>
+        <Flex css={{ padding: '0px 20px' }}>
+          <Button size={'lg'} css={{ flex: 1 }} onClick={() => handleLoginButtonClick(name, password)}>
             Login
           </Button>
         </Flex>
