@@ -10,8 +10,8 @@
   "dir": "ltr",
   "orientation": "portrait-primary",
   "icons": [{
-    "src": "/src/assets/react.svg",
-    "type": "image/svg+xml",
+    "src": "/src/assets/tmp_logo.png",
+    "type": "image/png",
     "sizes": "512x512"
   }]
 }
