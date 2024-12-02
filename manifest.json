@@ -1,14 +1,8 @@
 {
-  "name": "My PWA",
-  "short_name": "나의 블로그",
-  "start_url": "/index.html",
-  "scope": ".",
+  "name": "Regular Vote",
+  "short_name": "Regular Vote",
+  "start_url": "/",
   "display": "standalone",
-  "background_color": "#fff",
-  "theme_color": "#f351b5",
-  "description": "Keep running until you're super sweaty",
-  "dir": "ltr",
-  "orientation": "portrait-primary",
   "icons": [{
     "src": "/src/assets/tmp_logo.png",
     "type": "image/png",
