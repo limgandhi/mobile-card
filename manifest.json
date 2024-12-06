@@ -4,8 +4,7 @@
   "start_url": "/",
   "display": "standalone",
   "icons": [{
-    "src": "/src/assets/tmp_logo.png",
-    "type": "image/png",
-    "sizes": "1024x1024"
+    "src": "/regular-vote-icon.svg",
+    "sizes": "150x150"
   }]
 }
