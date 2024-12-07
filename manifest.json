@@ -434,7 +434,8 @@
     },
     {
       "src": "ios/180.png",
-      "sizes": "180x180"
+      "sizes": "180x180",
+      "purpose": "maskable"
     },
     {
       "src": "ios/192.png",
