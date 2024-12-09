@@ -90,13 +90,14 @@ const VoteBoard = ({ vote, handleVoteChange, updateVoteData }: VoteBoardProps) =
                 {vote.options
                   .filter((option) => optionIndex <= option.index && option.index < optionIndex + 3)
                   .map((option) => (
-                    <ChoiceButtonWrapper center key={'upperChoice' + option.index}>
+                    <ChoiceButtonWrapper center key={'choice' + option.index}>
                       <ChoiceButton
                         center
                         size65={option.votedUsers.length >= 6 && option.votedUsers.length < 12}
                         size80={option.votedUsers.length >= 12}
                         onClick={() => handleChoiceButtonClick(option.index)}
                         checked={checkedIndices.includes(option.index)}
+                        editable={editModeYn}
                       >
                         {option.displayName}
                       </ChoiceButton>
@@ -108,11 +109,11 @@ const VoteBoard = ({ vote, handleVoteChange, updateVoteData }: VoteBoardProps) =
       )}
       <Flex center>
         {editModeYn ? (
-          <Button size={'lg'} onClick={() => handleConfirmButtonClick()}>
+          <Button size={'lg'} css={{ flex: 1, background: '#C03935' }} onClick={() => handleConfirmButtonClick()}>
             Confirm
           </Button>
         ) : (
-          <Button size={'lg'} onClick={() => handleVoteButtonClick()}>
+          <Button size={'lg'} css={{ flex: 1 }} onClick={() => handleVoteButtonClick()}>
             Vote
           </Button>
         )}
@@ -126,17 +127,20 @@ const ChoiceButton = styled(Flex, {
   height: '50px',
   alignItems: 'center',
   borderRadius: '10px',
-  background: '#D9D9D9',
-  boxShadow: '0px 4px 4px 0px #00000040 , inset 0px -4px 4px 0px #00000040',
+  background: '#F5AD35',
   transitionProperty: 'width height',
-  transitionDuration: '0.1s',
+  transitionDuration: '0.2s',
   transitionTimingFunction: 'ease-in-out',
   fontFamily: 'Moneygraphy-Pixel',
   variants: {
+    editable: {
+      true: {
+        boxShadow: '0px 6px 4px 0px #00000040 , inset 0px -6px 2px 0px #00000040',
+      },
+    },
     checked: {
       true: {
-        background: '#B0B0B0',
-        boxShadow: '0px 4px 4px 0px #00000040 , inset 0px 4px 4px 0px #00000040',
+        background: '#7B571B',
       },
     },
     size65: {
@@ -152,6 +156,13 @@ const ChoiceButton = styled(Flex, {
       },
     },
   },
+  compoundVariants: [
+    {
+      editable: true,
+      checked: true,
+      css: { boxShadow: '0px 0px 0px 0px #00000040, inset 0px 6px 2px 0px #00000040' },
+    },
+  ],
 });
 const ChoiceButtonWrapper = styled(Flex, {
   width: '100px',
