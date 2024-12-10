@@ -75,7 +75,7 @@ const VoteBoardPage = () => {
     voteInitYn && (
       <Flex fullWidth fullHeight column start>
         <Flex fullWidth css={{ position: 'relative' }}>
-          <Flex fullWidth css={{ position: 'absolute', justifyContent: 'space-between' }}>
+          <Flex fullWidth css={{ position: 'absolute', justifyContent: 'space-between', padding: '0 20px' }}>
             <ListIcon onClick={() => handleListButtonClick()} />
             <LogoutIcon onClick={() => handleLogoutButtonClick()} />
           </Flex>

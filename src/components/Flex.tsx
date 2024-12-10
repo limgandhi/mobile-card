@@ -19,6 +19,7 @@ const FlexBase = ({ children, ...props }: PropsWithChildren<FlexProps>) => {
 
 const Flex = styled('div', {
   display: 'flex',
+  boxSizing: 'border-box', //prevent let padding change width or height
 
   variants: {
     fullWidth: {
