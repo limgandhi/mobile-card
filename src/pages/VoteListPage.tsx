@@ -5,6 +5,7 @@ import { ReactComponent as LogoutIcon } from '../assets/icons/logout.svg';
 import Flex from '../components/Flex.tsx';
 import Text from '../components/Text.tsx';
 import useFirestore from '../hooks/useFirestore.tsx';
+import useLogout from '../hooks/useLogout.tsx';
 import { useUserStorage } from '../hooks/useUserStorage.tsx';
 import { User } from '../types/User.types.ts';
 
@@ -13,6 +14,7 @@ const VoteListPage = () => {
   const { retrieveVotes } = useFirestore();
   const [voteList, setVoteList] = useState<string[]>([]);
   const navigate = useNavigate();
+  const { openLogoutPopup } = useLogout();
 
   useEffect(() => {
     if (currentUser) {
@@ -30,8 +32,7 @@ const VoteListPage = () => {
   };
 
   const handleLogoutButtonClick = () => {
-    initCurrentUser();
-    navigate('/', { replace: true });
+    openLogoutPopup();
   };
 
   return (
@@ -40,7 +41,7 @@ const VoteListPage = () => {
         <Flex fullWidth center css={{ padding: '10px 50px' }}>
           <Text fontSize={40}>{currentUser?.name ?? ''}</Text>
         </Flex>
-        <Flex fullWidth end css={{ position: 'absolute', zIndex: 1 }}>
+        <Flex fullWidth end css={{ position: 'absolute' }}>
           <LogoutIcon onClick={() => handleLogoutButtonClick()} />
         </Flex>
       </Flex>

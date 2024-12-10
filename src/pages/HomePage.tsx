@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { styled } from '@stitches/react';
 import Button from '../components/Button.tsx';
 import Flex from '../components/Flex.tsx';
 import Input from '../components/Input.tsx';

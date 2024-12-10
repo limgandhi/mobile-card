@@ -6,6 +6,7 @@ import Flex from '../components/Flex.tsx';
 import Text from '../components/Text.tsx';
 import VoteBoard from '../features/vote/VoteBoard.tsx';
 import useFirestore from '../hooks/useFirestore.tsx';
+import useLogout from '../hooks/useLogout.tsx';
 import { useUserStorage } from '../hooks/useUserStorage.tsx';
 import { initVote, Vote } from '../types/Vote.types.ts';
 import { isSameUser } from '../utils/User.util.ts';
@@ -15,6 +16,7 @@ const VoteBoardPage = () => {
   const { retrieveVoteBoard, updateVoteOptions } = useFirestore();
   const [vote, setVote] = useState<Vote>(initVote);
   const navigate = useNavigate();
+  const { openLogoutPopup } = useLogout();
 
   useEffect(() => {
     retrieveVoteBoard('regularVote1').then((data) => {
@@ -66,21 +68,22 @@ const VoteBoardPage = () => {
   };
 
   const handleLogoutButtonClick = () => {
-    initCurrentUser();
-    navigate('/', { replace: true });
+    openLogoutPopup();
   };
 
   return (
     voteInitYn && (
-      <Flex fullWidth fullHeight column start css={{ position: 'relative' }}>
-        <Flex fullWidth css={{ position: 'absolute', justifyContent: 'space-between' }}>
-          <ListIcon onClick={() => handleListButtonClick()} />
-          <LogoutIcon onClick={() => handleLogoutButtonClick()} />
-        </Flex>
-        <Flex center css={{ padding: '10px 50px' }}>
-          <Flex column css={{ gap: '10px' }}>
-            <Flex fullWidth center>
-              <Text fontSize={30}>{vote?.title ?? ''}</Text>
+      <Flex fullWidth fullHeight column start>
+        <Flex fullWidth css={{ position: 'relative' }}>
+          <Flex fullWidth css={{ position: 'absolute', justifyContent: 'space-between' }}>
+            <ListIcon onClick={() => handleListButtonClick()} />
+            <LogoutIcon onClick={() => handleLogoutButtonClick()} />
+          </Flex>
+          <Flex fullWidth center css={{ padding: '10px 50px' }}>
+            <Flex column css={{ gap: '10px' }}>
+              <Flex fullWidth center>
+                <Text fontSize={30}>{vote?.title ?? ''}</Text>
+              </Flex>
             </Flex>
           </Flex>
         </Flex>

@@ -47,32 +47,46 @@ const VoteBoard = ({ vote, handleVoteChange, updateVoteData }: VoteBoardProps) =
         dialogComponent: (
           <Flex
             css={{
-              width: 300,
+              width: 330,
               height: 500,
-              backgroundColor: '#FFFFFF',
+              backgroundColor: '#FEEED7',
               position: 'relative',
-              padding: '20px',
-              borderRadius: 5,
+              borderRadius: 10,
             }}
             column
           >
-            <Flex fullWidth center css={{ height: '100px' }}>
-              <Text fontSize={30}>Users</Text>
+            <Flex
+              fullWidth
+              center
+              css={{
+                height: '80px',
+                background: '#3A3754',
+                borderRadius: '10px 10px 0px 0px',
+                alignItems: 'center',
+              }}
+            >
+              <Text fontSize={40} fontColor={'#FEEED7'}>
+                Users
+              </Text>
             </Flex>
-            <Flex fullWidth fitToParent column start>
-              {vote.options
-                .filter((option) => option.index === targetIndex)
-                .flatMap((option) => option.votedUsers)
-                .map((user, index) => (
-                  <Flex fullWidth center key={'user' + index}>
-                    <Text>{user.name}</Text>
-                  </Flex>
-                ))}
+            <Flex fullWidth fitToParent>
+              <Flex fullWidth fitToParent column start css={{ padding: 20 }}>
+                {vote.options
+                  .filter((option) => option.index === targetIndex)
+                  .flatMap((option) => option.votedUsers)
+                  .map((user, index) => (
+                    <Flex fullWidth center key={'user' + index}>
+                      <Text fontSize={30}>{user.name}</Text>
+                    </Flex>
+                  ))}
+              </Flex>
             </Flex>
             <Flex fullWidth center>
-              <Button size="lg" onClick={() => close()}>
-                OK
-              </Button>
+              <Flex fullWidth css={{ padding: '20px' }}>
+                <Button size="lg" css={{ flex: 1 }} onClick={() => close()}>
+                  OK
+                </Button>
+              </Flex>
             </Flex>
           </Flex>
         ),
@@ -129,7 +143,7 @@ const ChoiceButton = styled(Flex, {
   borderRadius: '10px',
   background: '#F5AD35',
   transitionProperty: 'width height',
-  transitionDuration: '0.2s',
+  transitionDuration: '0.1s',
   transitionTimingFunction: 'ease-in-out',
   fontFamily: 'Moneygraphy-Pixel',
   variants: {

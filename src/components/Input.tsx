@@ -2,6 +2,8 @@ import React, { forwardRef, HTMLInputTypeAttribute, useRef, useState } from 'rea
 import { styled } from '@stitches/react';
 import Flex from './Flex.tsx';
 import Text from './Text.tsx';
+import { ReactComponent as LightOff } from '../assets/icons/light-off.svg';
+import { ReactComponent as LightOn } from '../assets/icons/light-on.svg';
 
 interface InputProps {
   type?: HTMLInputTypeAttribute;
@@ -47,12 +49,12 @@ const InputBase = forwardRef<HTMLInputElement, InputProps>(({ type, value, onCha
             onBlur={() => setFocusedYn(false)}
           />
         </Flex>
-        {type === 'password' && (
-          <Flex
-            css={{ width: 30, height: 30, borderRadius: 20, backgroundColor: showPasswordYn ? '#DDDDDD' : '#000000' }}
-            onClick={() => toggleShowPasswordButton()}
-          />
-        )}
+        {type === 'password' &&
+          (showPasswordYn ? (
+            <LightOn onClick={() => toggleShowPasswordButton()} />
+          ) : (
+            <LightOff onClick={() => toggleShowPasswordButton()} />
+          ))}
       </Flex>
       <Flex fullWidth css={{ position: 'relative' }}>
         <BorderBottom fullWidth css={{ borderBottom: '3px solid #B0B0B0' }} />

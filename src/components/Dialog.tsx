@@ -32,8 +32,7 @@ const StyledDialog = styled(Flex, {
   justifyContent: 'center',
   alignItems: 'center',
   backgroundColor: '#FFFFFF',
-  borderRadius: 5,
-  border: '3px solid #000000',
+  borderRadius: 10,
   boxShadow: '0px 10px 5px 0px rgb(0 0 0 / 25%)',
 });
 
