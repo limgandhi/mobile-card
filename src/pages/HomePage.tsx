@@ -26,16 +26,7 @@ const HomePage = () => {
   }, [currentUser]);
   const { retrieveUsers } = useFirestore();
 
-  const handleAdminButtonClick = () => {
-    open({
-      dialogComponent: (
-        <Flex
-          css={{ width: 100, height: 100, backgroundColor: '#000000', position: 'relative' }}
-          onClick={() => close()}
-        ></Flex>
-      ),
-    });
-  };
+  const handleAdminButtonClick = () => {};
 
   const handleNameChange = (value: string) => {
     setName((prevState) => (prevState !== value ? value : prevState));
@@ -66,7 +57,49 @@ const HomePage = () => {
   };
 
   const failedLoggingIn = () => {
-    open({});
+    open({
+      dialogComponent: (
+        <Flex
+          css={{
+            width: 330,
+            height: 500,
+            backgroundColor: '#FEEED7',
+            position: 'relative',
+            borderRadius: 10,
+          }}
+          column
+        >
+          <Flex
+            fullWidth
+            center
+            css={{
+              height: '80px',
+              background: '#3A3754',
+              borderRadius: '10px 10px 0px 0px',
+              alignItems: 'center',
+            }}
+          >
+            <Text fontSize={40} fontColor={'#FEEED7'}>
+              Warning
+            </Text>
+          </Flex>
+          <Flex fullWidth fitToParent>
+            <Flex fullWidth fitToParent column center css={{ padding: 20, alignItems: 'center' }}>
+              <Text fontSize={30}>{'Failed to Log-in'}</Text>
+            </Flex>
+          </Flex>
+          <Flex fullWidth center>
+            <Flex fullWidth css={{ padding: 20 }}>
+              <Flex fullWidth column css={{ gap: 20 }}>
+                <Button size="lg" css={{ flex: 1 }} onClick={() => close()}>
+                  Cancel
+                </Button>
+              </Flex>
+            </Flex>
+          </Flex>
+        </Flex>
+      ),
+    });
     initCurrentUser();
   };
 

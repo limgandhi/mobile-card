@@ -36,13 +36,13 @@ const VoteListPage = () => {
   };
 
   return (
-    <Flex fullWidth fullHeight column css={{ gap: 20 }}>
+    <Flex fullWidth fullHeight column start css={{ gap: 20 }}>
       <Flex fullWidth css={{ position: 'relative' }}>
-        <Flex fullWidth center css={{ padding: '10px 50px' }}>
-          <Text fontSize={40}>{currentUser?.name ?? ''}</Text>
-        </Flex>
         <Flex fullWidth end css={{ position: 'absolute', padding: '0 20px' }}>
           <LogoutIcon onClick={() => handleLogoutButtonClick()} />
+        </Flex>
+        <Flex fullWidth center css={{ padding: '10px 50px' }}>
+          <Text fontSize={40}>{currentUser?.name ?? ''}</Text>
         </Flex>
       </Flex>
       <Flex fitToParent css={{ paddingLeft: 30, paddingRight: 30, gap: 10 }} column>
